@@ -45,8 +45,8 @@ ssh_eval 'ip firewall address-list add address=10.0.0.0/8 disabled=no list=local
 ssh_eval 'ip firewall address-list add address=172.16.0.0/12 disabled=no list=local_traffic'
 ssh_eval 'ip firewall address-list add address=192.168.0.0/16 disabled=no list=local_traffic'
 ssh_eval 'ip firewall mangle add disabled=no action=mark-routing chain=prerouting dst-address-list=!local_traffic new-routing-mark=vpn_traffic passthrough=yes src-address=192.168.88.2-192.168.88.254'
-ssh_eval 'ip route add disabled=no dst-address=0.0.0.0/0 type=unicast gw=ukvpn routing-mark=vpn_traffic scope=30 target-scope=10'
-ssh_eval 'ip firewall nat add chain=srcnat src-address=192.168.88.0/24 out-interface=ukvpn action=masquerade'
+ssh_eval 'ip route add disabled=no dst-address=0.0.0.0/0 type=unicast gateway=myvpn routing-mark=vpn_traffic scope=30 target-scope=10'
+ssh_eval 'ip firewall nat add chain=srcnat src-address=192.168.88.0/24 out-interface=myvpn action=masquerade'
 
 # monitor connection
 ssh_eval 'interface ovpn-client monitor 0'
